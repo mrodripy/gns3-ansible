@@ -30,7 +30,7 @@ gns3-ansible/
 ├── setup.sh
 ├── .gitignore
 └── README.md
-text
+
 
 
 ## ⚡ Quick Start
