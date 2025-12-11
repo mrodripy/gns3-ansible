@@ -48,7 +48,14 @@ pip install -r requirements.txt
 ansible-galaxy collection install -r requirements.yml
 
 # Test connection
-ansible-playbook playbooks/test_connection.yml
+# Test connection using example inventory
+ansible-playbook playbooks/test_connection.yml -i inventory/hosts.yml
+
+# Backup configuration
+ansible-playbook playbooks/backup_config.yml -i inventory/hosts.yml
+
+# Basic management
+ansible-playbook playbooks/manage_router.yml -i inventory/hosts.yml
 
 📝 License
 
