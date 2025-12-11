@@ -47,7 +47,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 ansible-galaxy collection install -r requirements.yml
 
-# Test connection
 # Test connection using example inventory
 ansible-playbook playbooks/test_connection.yml -i inventory/hosts.yml
 
