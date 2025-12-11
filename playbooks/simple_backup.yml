@@ -1,20 +1,15 @@
 ---
-- name: Simple Backup
-  hosts: r1-lab
+- name: Simple Backup Example
+  hosts: all
   gather_facts: no
+  connection: ansible.netcommon.network_cli
 
   tasks:
-    - name: Get config
+    - name: Get running config
       cisco.ios.ios_command:
         commands: show running-config
       register: result
 
-    - name: Display first few lines
+    - name: Show first line
       debug:
-        msg: "Backup successful! First line: {{ result.stdout_lines[0][0] }}"
-
-    - name: Save to file (local)
-      local_action:
-        module: copy
-        content: "{{ result.stdout[0] }}"
-        dest: "backups/{{ inventory_hostname }}.cfg"
+        msg: "First line: {{ result.stdout_lines[0][0] if result.stdout_lines[0] else 'Empty' }}"
