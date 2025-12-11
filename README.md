@@ -24,6 +24,7 @@ gns3-ansible/
 ├── requirements.txt
 ├── requirements.yml
 ├── setup.sh
+├── start_ansible.sh
 ├── .gitignore
 ├── inventory/
 │ ├── c7200.yml # Router-specific configuration
