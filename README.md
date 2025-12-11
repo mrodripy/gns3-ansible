@@ -20,6 +20,7 @@ Automation framework for managing Cisco C7200 routers in GNS3 lab environment us
 gns3-ansible/
 ├── LICENSE
 ├── README.md
+├── CONTRIBUTING.md
 ├── ansible.cfg
 ├── requirements.txt
 ├── requirements.yml
