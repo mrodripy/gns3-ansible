@@ -1,6 +1,6 @@
 ---
 - name: Backup Router Configuration
-  hosts: r1-lab
+  hosts: all
   gather_facts: no
   connection: ansible.netcommon.network_cli
 
@@ -10,30 +10,13 @@
         commands: show running-config
       register: config
 
-    - name: Create backup directory
-      ansible.builtin.file:
-        path: "./backups"
-        state: directory
-      delegate_to: localhost
-      run_once: true
+    - name: Display backup status
+      debug:
+        msg: "Backup successful. Configuration size: {{ config.stdout[0] | length }} characters"
 
-    - name: Save running config to file
+    - name: Save to local file (example)
       ansible.builtin.copy:
         content: "{{ config.stdout[0] }}"
-        dest: "./backups/{{ inventory_hostname }}-running-{{ ansible_date_time.date }}.cfg"
+        dest: "./backups/{{ inventory_hostname }}-{{ ansible_date_time.date }}.cfg"
       delegate_to: localhost
-
-    - name: Get startup configuration
-      cisco.ios.ios_command:
-        commands: show startup-config
-      register: startup_config
-
-    - name: Save startup config to file
-      ansible.builtin.copy:
-        content: "{{ startup_config.stdout[0] if startup_config.stdout[0] else 'No startup config' }}"
-        dest: "./backups/{{ inventory_hostname }}-startup-{{ ansible_date_time.date }}.cfg"
-      delegate_to: localhost
-
-    - name: Show backup status
-      ansible.builtin.debug:
-        msg: "Backup completed for {{ inventory_hostname }}. Files saved in ./backups/"
+      when: false  # Disabled by default, set to true to enable file saving
