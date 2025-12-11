@@ -30,9 +30,6 @@ gns3-ansible/
 ├── setup.sh
 ├── .gitignore
 └── README.md
-
-
-
 ## ⚡ Quick Start
 ```bash
 # Clone repository
