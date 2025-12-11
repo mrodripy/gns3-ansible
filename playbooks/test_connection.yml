@@ -1,0 +1,37 @@
+---
+- name: Test Ansible Connection to C7200
+  hosts: r1-lab
+  gather_facts: no
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Get router information
+      cisco.ios.ios_command:
+        commands:
+          - show version
+          - show ip interface brief
+          - show running-config | include hostname
+          - show clock
+      register: router_info
+
+    - name: Display router information
+      debug:
+        msg: |
+          Router: {{ inventory_hostname }}
+          Hostname: {{ router_info.stdout_lines[2][0] if router_info.stdout_lines[2] else 'N/A' }}
+          Time: {{ router_info.stdout_lines[3][0] if router_info.stdout_lines[3] else 'N/A' }}
+          Interfaces:
+          {% for line in router_info.stdout_lines[1] %}
+            {{ line }}
+          {% endfor %}
+
+    - name: Show full version info (first 5 lines)
+      debug:
+        var: router_info.stdout_lines[0][0:5]
+        
+    - name: Make a simple configuration change
+      cisco.ios.ios_config:
+        lines:
+          - banner motd # Managed by Ansible #
+        save_when: always
+      tags: config

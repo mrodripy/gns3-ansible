@@ -1,0 +1,20 @@
+---
+- name: Simple Backup
+  hosts: r1-lab
+  gather_facts: no
+
+  tasks:
+    - name: Get config
+      cisco.ios.ios_command:
+        commands: show running-config
+      register: result
+
+    - name: Display first few lines
+      debug:
+        msg: "Backup successful! First line: {{ result.stdout_lines[0][0] }}"
+
+    - name: Save to file (local)
+      local_action:
+        module: copy
+        content: "{{ result.stdout[0] }}"
+        dest: "backups/{{ inventory_hostname }}.cfg"

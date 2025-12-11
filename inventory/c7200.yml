@@ -1,0 +1,20 @@
+---
+all:
+  hosts:
+    r1-lab:
+      ansible_host: 192.168.122.10
+      ansible_user: admin
+      ansible_ssh_pass: "cisco123"      # Para SSH
+      ansible_password: "cisco123"       # Para Telnet
+      ansible_connection: ansible.netcommon.network_cli
+      ansible_network_os: cisco.ios.ios
+      ansible_become: yes
+      ansible_become_method: enable
+      ansible_become_password: "cisco123"
+      # Opciones para IOS viejo:
+      ansible_ssh_args: >
+        -o HostKeyAlgorithms=+ssh-rsa
+        -o KexAlgorithms=+diffie-hellman-group1-sha1
+        -o Ciphers=+aes256-cbc
+        -o StrictHostKeyChecking=no
+        -o UserKnownHostsFile=/dev/null

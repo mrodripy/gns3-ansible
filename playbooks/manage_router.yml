@@ -1,0 +1,23 @@
+---
+- name: Manage Router
+  hosts: r1-lab
+  gather_facts: no
+  
+  tasks:
+    - name: Show version
+      cisco.ios.ios_command:
+        commands: show version | include Version
+      register: ver
+      
+    - name: Display version
+      debug:
+        msg: "Version: {{ ver.stdout_lines[0][0] }}"
+        
+    - name: Show interfaces
+      cisco.ios.ios_command:
+        commands: show ip interface brief
+      register: intf
+      
+    - name: Display interfaces
+      debug:
+        msg: "Interfaces: {{ intf.stdout_lines[0] }}"
