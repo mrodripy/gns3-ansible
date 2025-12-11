@@ -16,7 +16,7 @@ Automation framework for managing Cisco C7200 routers in GNS3 lab environment us
 - ✅ Multi-device inventory management
 
 ## 📁 Project Structure
-
+```
 gns3-ansible/
 ├── ansible.cfg
 ├── inventory/
@@ -30,6 +30,7 @@ gns3-ansible/
 ├── setup.sh
 ├── .gitignore
 └── README.md
+```
 ## ⚡ Quick Start
 ```bash
 # Clone repository
