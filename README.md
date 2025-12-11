@@ -18,18 +18,22 @@ Automation framework for managing Cisco C7200 routers in GNS3 lab environment us
 ## 📁 Project Structure
 ```
 gns3-ansible/
+├── LICENSE
+├── README.md
 ├── ansible.cfg
-├── inventory/
-│ └── example.yml
-├── playbooks/
-│ ├── backup_config.yml
-│ ├── deploy_baseline.yml
-│ └── configure_ospf.yml
 ├── requirements.txt
 ├── requirements.yml
 ├── setup.sh
 ├── .gitignore
-└── README.md
+├── inventory/
+│ ├── c7200.yml # Router-specific configuration
+│ ├── hosts.yml # Main example inventory (no credentials)
+│ └── telnet_hosts.yml # Telnet configuration example
+└── playbooks/
+├── test_connection.yml # Test basic connectivity
+├── backup_config.yml # Backup router configuration
+├── manage_router.yml # Basic router management
+└── simple_backup.yml # Simple backup example
 ```
 ## ⚡ Quick Start
 ```bash
