@@ -1,23 +1,30 @@
 ---
-- name: Manage Router
-  hosts: r1-lab
+- name: Basic Router Management
+  hosts: all
   gather_facts: no
-  
+  connection: ansible.netcommon.network_cli
+
   tasks:
-    - name: Show version
+    - name: Get router information
       cisco.ios.ios_command:
-        commands: show version | include Version
-      register: ver
-      
-    - name: Display version
+        commands:
+          - show version | include Version
+          - show ip interface brief
+      register: info
+
+    - name: Display router information
       debug:
-        msg: "Version: {{ ver.stdout_lines[0][0] }}"
-        
-    - name: Show interfaces
-      cisco.ios.ios_command:
-        commands: show ip interface brief
-      register: intf
-      
-    - name: Display interfaces
-      debug:
-        msg: "Interfaces: {{ intf.stdout_lines[0] }}"
+        msg: |
+          Router Information:
+          Version: {{ info.stdout_lines[0][0] if info.stdout_lines[0] else 'N/A' }}
+          Interfaces:
+          {% for line in info.stdout_lines[1] %}
+            {{ line }}
+          {% endfor %}
+
+    - name: Configure basic settings (example)
+      cisco.ios.ios_config:
+        lines:
+          - banner motd # Managed by Ansible #
+        save_when: always
+      when: false  # Disabled by default for safety
